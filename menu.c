@@ -83,7 +83,7 @@ char get_ordem() {
     printf("<-- Escolha um tipo de ordenacao -->\n");
     printf("-> [c] - Crescente   \n");
     printf("-> [d] - Decrescente \n");
-    printf("-> [r] - Aleatoria   \n");
+    printf("-> [r] - Random   \n");
     printf("-> [s] - Sair        \n");
     printf("<---------------------------------->\n");
     printf("-> ");

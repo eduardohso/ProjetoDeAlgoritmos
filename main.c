@@ -21,10 +21,10 @@ int* alocArray(int tamanho) {
 }
 
 // cria pastas internas
-void criaPastasInternas(char *path, char *sufix) {
+void criaPastasInternas(char *caminho, char *sufix) {
   struct stat st = {0};
   char nomePasta[30];
-  strcpy(nomePasta, path);
+  strcpy(nomePasta, caminho);
   strcat(nomePasta, sufix);
   if (stat(nomePasta, &st) == -1) {
       if (mkdir(nomePasta, 0700) == -1) {
@@ -44,19 +44,19 @@ void criaPastasDeConfig(char *nomePasta) {
   }
 
   while (tamanho <= UM_MILHAO) {
-    char path[30];
+    char caminho[30];
     sprintf(numEmStr, "%d", tamanho);
-    strcpy(path, nomePasta);
-    strcat(path, "/");
-    strcat(path, numEmStr);
-    if (stat(path, &st) == -1) {
-      if (mkdir(path, 0700) == -1) {
+    strcpy(caminho, nomePasta);
+    strcat(caminho, "/");
+    strcat(caminho, numEmStr);
+    if (stat(caminho, &st) == -1) {
+      if (mkdir(caminho, 0700) == -1) {
         exit(1);
       }
     }
-    criaPastasInternas(path,"/crescente");
-    criaPastasInternas(path,"/decrescente");
-    criaPastasInternas(path,"/random");
+    criaPastasInternas(caminho,"/crescente");
+    criaPastasInternas(caminho,"/decrescente");
+    criaPastasInternas(caminho,"/random");
     tamanho *= 10;
   }
   system("cls");
