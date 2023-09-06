@@ -23,7 +23,7 @@ int get_opAlgoritmo() {
       system("cls");
       printf("#*# Escolha uma opcao valida! #*#\n\n");
     }
-  } while(opcao < 0 || opcao > 1); // checa se opção escolhida é valida para sair do loop
+  } while(opcao < 0 || opcao > 1);
   return opcao;
 }
 
@@ -92,6 +92,6 @@ char get_ordem() {
       system("cls");
       printf("#*# Escolha uma opcao valida! #*#\n\n");
     }
-  } while( opcao != 'c' && opcao != 'd'  && opcao != 'r'  && opcao != 's' ); // checa se opção escolhida é valida para sair do loop
+  } while( opcao != 'c' && opcao != 'd'  && opcao != 'r'  && opcao != 's' );
   return opcao;
 }

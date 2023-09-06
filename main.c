@@ -63,7 +63,7 @@ void criaPastasDeConfig(char *nomePasta) {
 }
 
 
-// função que calcula tempo de execucção
+// calculo do tempo de execucção
 double  CalcTempExec(int *array, int tamanhoArray) {
   clock_t inicio, fim;
   double tempoExec;
@@ -82,27 +82,28 @@ int geraNumAleatorio() {
   return rand();
 }
 
-// popula array em ordem crescente
-void populaArrayOrdemCrescente(int *array,int tamanhoArray) {
-  int seed = geraNumAleatorio();
+// preenche array em ordem crescente
+void preencheArrayOrdemCrescente(int *array, int tamanhoArray) {
   int i;
-  for(i = 0; i < tamanhoArray; i++) {
+  int seed = geraNumAleatorio();
+  
+  for (i = 0; i < tamanhoArray; i++) {
     array[i] = seed + i;
   }
 }
 
-//popula array em ordem descrescente
-void populaArrayOrdemDecrescente(int *array,int tamanhoArray) {
-  int seed = geraNumAleatorio();
+//preenche array em ordem descrescente
+void preencheArrayOrdemDecrescente(int *array,int tamanhoArray) {
   int i;
-  int quantElementos = tamanhoArray - 1 ; 
-  for(i =0 ; i <= quantElementos; i++) {
-    array[i] = seed + (quantElementos - i);
+  int seed = geraNumAleatorio();
+  
+  for (i = 0; i < tamanhoArray; i++) {
+    array[i] = seed - i;
   }
 }
 
-// ordem randomica
-void populaArrayOrdemAleatoria(int *array,int tamanhoArray) {
+//preenche array em ordem randomica
+void preencheArrayOrdemAleatoria(int *array,int tamanhoArray) {
   int i;
   int seed = geraNumAleatorio();
   srand((unsigned) seed);
@@ -178,7 +179,7 @@ void salvaTempoExecArquivo(double tempo,int tamanho, char ordem, char *algoritmo
 
 }
 
-void avalia_insertionSOrt(int *array, int tamanhoArray, char ordem) {
+void avalia_insertionSort(int *array, int tamanhoArray, char ordem) {
   clock_t inicio, fim;
   double tempoExec;
   inicio = clock();
@@ -221,19 +222,19 @@ int main () {
   }
   switch (ordem) {
     case 'c':
-      populaArrayOrdemCrescente(array, tamanhoArray);
+      preencheArrayOrdemCrescente(array, tamanhoArray);
       break;
     case 'd':
-      populaArrayOrdemDecrescente(array, tamanhoArray);
+      preencheArrayOrdemDecrescente(array, tamanhoArray);
       break;
     case 'r':
-      populaArrayOrdemAleatoria(array, tamanhoArray);
+      preencheArrayOrdemAleatoria(array, tamanhoArray);
       break;
     default:
       break;
   }
 
-  avalia_insertionSOrt(array,tamanhoArray,ordem);
+  avalia_insertionSort(array,tamanhoArray,ordem);
 
   free(array);
   return 0;
