@@ -13,17 +13,21 @@ int get_opAlgoritmo() {
   system("cls");
   do {
     fflush(stdin);
-    printf("<-- Escolha um algoritmo -->\n");
-    printf("-> [1] - Insertion-sort     \n");
-    printf("-> [0] - Sair               \n");
+    printf("<-- Escolha um Algoritmo -->\n");
+    printf("-> [1] - Insertion Sort\n");
+    printf("-> [2] - Selection Sort\n");
+    printf("-> [3] - Shell Sort\n");
+    printf("-> [4] - Bubble Sort\n");
+    printf("-> [5] - Excluir TODOS os resultados anteriores\n");
+    printf("-> [0] - Sair\n");
     printf("<-------------------------->\n");
     printf("-> ");
     scanf("%d",&opcao);
-    if(opcao < 0 || opcao > 1) {
+    if(opcao < 0 || opcao > 5) {
       system("cls");
       printf("#*# Escolha uma opcao valida! #*#\n\n");
     }
-  } while(opcao < 0 || opcao > 1);
+  } while(opcao < 0 || opcao > 5);
   return opcao;
 }
 
@@ -67,12 +71,10 @@ int get_tamanhoArray() {
     case 6:
       return UM_MILHAO;
       break;
-    case 0:
-      return 0;
-      break;
     default:
       break;
   }
+  return 0;
 }
 
 char get_ordem() {
@@ -81,10 +83,10 @@ char get_ordem() {
   do {
     fflush(stdin);
     printf("<-- Escolha um tipo de ordenacao -->\n");
-    printf("-> [c] - Crescente   \n");
-    printf("-> [d] - Decrescente \n");
-    printf("-> [r] - Random   \n");
-    printf("-> [s] - Sair        \n");
+    printf("-> [c] - Crescente\n");
+    printf("-> [d] - Decrescente\n");
+    printf("-> [r] - Random\n");
+    printf("-> [s] - Sair\n");
     printf("<---------------------------------->\n");
     printf("-> ");
     opcao = getchar();
