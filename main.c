@@ -329,5 +329,8 @@ int main () {
   }
 
   free(array);
+  fflush(stdin);
+  printf("\n");
+  getchar();
   return 0;
 }
