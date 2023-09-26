@@ -25,7 +25,7 @@ void swap(int *xp, int *yp)
     *yp = temp;
 }
  
-void selection_sort(int *array, int tamanho)
+void selectionSort(int *array, int tamanho)
 {
     int i, j, min_idx;
  
@@ -51,13 +51,10 @@ int shellSort(int *array, int tamanho)
 		int i;
         for (i = gap; i < tamanho; i += 1)
         {
-
             int temp = array[i];
-
             int j;            
             for (j = i; j >= gap && array[j - gap] > temp; j -= gap)
                 array[j] = array[j - gap];
-
             array[j] = temp;
         }
     }
@@ -66,8 +63,8 @@ int shellSort(int *array, int tamanho)
 
 // ! BUBBLE SORT----------------------------------------------
 
-void bubbleSort(int *array, int tamanho) {
-
+void bubbleSort(int *array, int tamanho) 
+{
   int i, j;
   for (i = 0; i < tamanho - 1; i++) {
     for (j = 0; j < tamanho - i - 1; j++) {
@@ -76,5 +73,4 @@ void bubbleSort(int *array, int tamanho) {
       }
     }
   }
-
 }
