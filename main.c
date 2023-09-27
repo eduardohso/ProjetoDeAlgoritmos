@@ -20,6 +20,12 @@
 #define SELECTION "Selection-Sort"
 #define SHELL "Shell-Sort"
 
+int geraNumAleatorio() {
+  time_t t;
+  srand((unsigned) time(&t));
+  return rand();
+}
+
 int* alocArray(int tamanho) {
   return (int*) malloc(tamanho * sizeof(int));
 }
@@ -76,25 +82,6 @@ void criaPastas(char *nomePasta) {
     tamanho *= 10;
   }
   system("cls");
-}
-
-// calculo do tempo de execucção
-double  calcTempExec(int *array, int tamanhoArray) {
-  clock_t inicio, fim;
-  double tempoExec;
-  inicio = clock();
-
-  insertionSort(array,tamanhoArray);
-
-  fim = clock();
-  tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
-  return tempoExec;
-}
-
-int geraNumAleatorio() {
-  time_t t;
-  srand((unsigned) time(&t));
-  return rand();
 }
 
 // preenche array em ordem crescente
@@ -158,6 +145,19 @@ void salvaArquivo(int *array,int tamanho, char ordem, char *tipoDeArquivo, char 
     fprintf(ponteiroArquivo,"%d\n",array[i]);
   }
   fclose(ponteiroArquivo);
+}
+
+// calculo do tempo de execucção
+double  calcTempExec(int *array, int tamanhoArray) {
+  clock_t inicio, fim;
+  double tempoExec;
+  inicio = clock();
+
+  insertionSort(array,tamanhoArray);
+
+  fim = clock();
+  tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  return tempoExec;
 }
 
 void salvaTempoExec(double tempo,int tamanho, char ordem, char *algoritmo) {
