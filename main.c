@@ -186,7 +186,6 @@ void salvaTempoExec(double tempo,int tamanho, char ordem, char *algoritmo) {
 
   ponteiroArquivo = fopen(caminho,"w");
 
-  // fprintf(ponteiroArquivo,"%d\n",tamanho);
   fprintf(ponteiroArquivo,"%lf\n",tempo);
 
   fclose(ponteiroArquivo);
