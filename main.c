@@ -8,6 +8,7 @@
 #include "algoritmos.c"
 #include "menu.c"
 
+
 #define DEZ 10
 #define CEM 100
 #define MIL 1000
@@ -19,6 +20,11 @@
 #define BUBBLE "Bubble-Sort"
 #define SELECTION "Selection-Sort"
 #define SHELL "Shell-Sort"
+#define MERGE "Merge-Sort"
+#define QUICK_V1 "Quick-Sort-V1"
+#define QUICK_V2 "Quick-Sort-V2-Media"
+#define QUICK_V3 "Quick-Sort-V3-Mediana"
+#define QUICK_V4 "Quick-Sort-V4-Random"
 
 int geraNumAleatorio() {
   time_t t;
@@ -214,7 +220,7 @@ void avalia_selectionSort(int *array, int tamanhoArray, char ordem) {
   inicio = clock();
   salvaArquivo(array, tamanhoArray, ordem, "entrada","Selection-Sort/");
 
-  selection_sort(array,tamanhoArray);
+  selectionSort(array,tamanhoArray);
 
   fim = clock();
   tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
@@ -257,6 +263,85 @@ void avalia_bubbleSort(int *array, int tamanhoArray, char ordem) {
   printf("Tempo de execucao: %f\n",tempoExec);
 }
 
+void avalia_mergeSort(int *array, int tamanhoArray, char ordem) {
+  clock_t inicio, fim;
+  double tempoExec;
+  inicio = clock();
+  salvaArquivo(array, tamanhoArray, ordem, "entrada","Merge-Sort/");
+
+  mergeSort(array,0,tamanhoArray - 1);
+
+  fim = clock();
+  tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  salvaArquivo(array, tamanhoArray, ordem, "saida","Merge-Sort/");
+  salvaTempoExec(tempoExec, tamanhoArray, ordem,"Merge-Sort/");
+
+  printf("Tempo de execucao: %f\n",tempoExec);
+}
+
+void avalia_quickSort_V1(int *array, int tamanhoArray, char ordem) {
+  clock_t inicio, fim;
+  double tempoExec;
+  inicio = clock();
+  salvaArquivo(array, tamanhoArray, ordem, "entrada","Quick-Sort-V1/");
+
+  quickSortV1(array,0,tamanhoArray - 1);
+
+  fim = clock();
+  tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  salvaArquivo(array, tamanhoArray, ordem, "saida","Quick-Sort-V1/");
+  salvaTempoExec(tempoExec, tamanhoArray, ordem,"Quick-Sort-V1/");
+
+  printf("Tempo de execucao: %f\n",tempoExec);
+}
+
+void avalia_quickSort_V2(int *array, int tamanhoArray, char ordem) {
+  clock_t inicio, fim;
+  double tempoExec;
+  inicio = clock();
+  salvaArquivo(array, tamanhoArray, ordem, "entrada","Quick-Sort-V2-Media/");
+
+  quickSortV2(array,0,tamanhoArray - 1);
+
+  fim = clock();
+  tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  salvaArquivo(array, tamanhoArray, ordem, "saida","Quick-Sort-V2-Media/");
+  salvaTempoExec(tempoExec, tamanhoArray, ordem,"Quick-Sort-V2-Media/");
+
+  printf("Tempo de execucao: %f\n",tempoExec);
+}
+
+void avalia_quickSort_V3(int *array, int tamanhoArray, char ordem) {
+  clock_t inicio, fim;
+  double tempoExec;
+  inicio = clock();
+  salvaArquivo(array, tamanhoArray, ordem, "entrada","Quick-Sort-V3-Mediana/");
+
+  quickSortV3(array,0,tamanhoArray - 1);
+
+  fim = clock();
+  tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  salvaArquivo(array, tamanhoArray, ordem, "saida","Quick-Sort-V3-Mediana/");
+  salvaTempoExec(tempoExec, tamanhoArray, ordem,"Quick-Sort-V3-Mediana/");
+
+  printf("Tempo de execucao: %f\n",tempoExec);
+}
+
+void avalia_quickSort_V4(int *array, int tamanhoArray, char ordem) {
+  clock_t inicio, fim;
+  double tempoExec;
+  inicio = clock();
+  salvaArquivo(array, tamanhoArray, ordem, "entrada","Quick-Sort-V4-Random/");
+
+  quickSortV4(array,0,tamanhoArray - 1);
+
+  fim = clock();
+  tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  salvaArquivo(array, tamanhoArray, ordem, "saida","Quick-Sort-V4-Random/");
+  salvaTempoExec(tempoExec, tamanhoArray, ordem,"Quick-Sort-V4-Random/");
+
+  printf("Tempo de execucao: %f\n",tempoExec);
+}
 
 int main () {
   int *array, tamanhoArray;
@@ -268,11 +353,16 @@ int main () {
     return 0;
   }
 
-  if(algoritmo==5){
+  if(algoritmo==10){
       excluiResultados(INSERTION);
       excluiResultados(SELECTION);
       excluiResultados(SHELL);
       excluiResultados(BUBBLE);
+      excluiResultados(MERGE);
+      excluiResultados(QUICK_V1);
+      excluiResultados(QUICK_V2);
+      excluiResultados(QUICK_V3);
+      excluiResultados(QUICK_V4);
       printf("Resultados excluidos com sucesso.\n");
       return 0;
   }
@@ -286,6 +376,7 @@ int main () {
   ordem = get_ordem();
   if(ordem == 's') {
     printf("Saindo...");
+    return 0;
   }
   array = alocArray(tamanhoArray);
   if(array == NULL) {
@@ -322,6 +413,26 @@ int main () {
     case 4:
       criaPastas(BUBBLE);
       avalia_bubbleSort(array,tamanhoArray,ordem);
+      break;
+    case 5:
+      criaPastas(MERGE);
+      avalia_mergeSort(array,tamanhoArray,ordem);
+      break;
+    case 6:
+      criaPastas(QUICK_V1);
+      avalia_quickSort_V1(array,tamanhoArray,ordem);
+      break;
+    case 7:
+      criaPastas(QUICK_V2);
+      avalia_quickSort_V2(array,tamanhoArray,ordem);
+      break;
+    case 8:
+      criaPastas(QUICK_V3);
+      avalia_quickSort_V3(array,tamanhoArray,ordem);
+      break;
+    case 9:
+      criaPastas(QUICK_V4);
+      avalia_quickSort_V4(array,tamanhoArray,ordem);
       break;
     default:
       break;

@@ -18,16 +18,21 @@ int get_opAlgoritmo() {
     printf("-> [2] - Selection Sort\n");
     printf("-> [3] - Shell Sort\n");
     printf("-> [4] - Bubble Sort\n");
-    printf("-> [5] - Excluir TODOS os resultados anteriores\n");
+    printf("-> [5] - Merge Sort\n");
+    printf("-> [6] - Quick Sort V1\n");
+    printf("-> [7] - Quick Sort V2-Media\n");
+    printf("-> [8] - Quick Sort V3-Mediana\n");
+    printf("-> [9] - Quick Sort V4-Random\n");
+    printf("-> [10] - Excluir TODOS os resultados anteriores\n");
     printf("-> [0] - Sair\n");
     printf("<-------------------------->\n");
     printf("-> ");
     scanf("%d",&opcao);
-    if(opcao < 0 || opcao > 5) {
+    if(opcao < 0 || opcao > 10) {
       system("cls");
       printf("#*# Escolha uma opcao valida! #*#\n\n");
     }
-  } while(opcao < 0 || opcao > 5);
+  } while(opcao < 0 || opcao > 10);
   return opcao;
 }
 
