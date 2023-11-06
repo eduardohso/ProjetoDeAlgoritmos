@@ -10,12 +10,16 @@ Para compilar o programa no Windows e evitar problemas com os algoritmos QuickSo
 
 2. Utilize o GCC com o seguinte comando:
 
+```bash
 gcc -o main main.c -Wl,--stack,67108864
+```
 
 Isso irá compilar o arquivo `main.c` e gerar um executável chamado `main`.
 
 3. Para executar o programa, utilize o seguinte comando:
 
+```bash
 ./main
+```
 
 Essas instruções garantirão o funcionamento correto dos algoritmos, mesmo para entradas maiores.
