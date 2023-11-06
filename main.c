@@ -5,10 +5,10 @@
 #include <windows.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "algoritmos.c"
-#include "menu.c"
+#include "algoritmos.c" // Inclui o arquivo com os algoritmos de ordenação
+#include "menu.c" // Inclui o arquivo com as funções de menu
 
-
+// Definições de tamanhos de array
 #define DEZ 10
 #define CEM 100
 #define MIL 1000
@@ -16,6 +16,7 @@
 #define CEM_MIL 100000
 #define UM_MILHAO 1000000
 
+// Nomes dos algoritmos para criação de pastas
 #define INSERTION "Insertion-Sort"
 #define BUBBLE "Bubble-Sort"
 #define SELECTION "Selection-Sort"
@@ -26,16 +27,19 @@
 #define QUICK_V3 "Quick-Sort-V3-Mediana"
 #define QUICK_V4 "Quick-Sort-V4-Random"
 
+// Função para gerar um número aleatório
 int geraNumAleatorio() {
   time_t t;
   srand((unsigned) time(&t));
   return rand();
 }
 
+// Função para alocar um array dinamicamente
 int* alocArray(int tamanho) {
   return (int*) malloc(tamanho * sizeof(int));
 }
 
+// Função para excluir resultados anteriores de um algoritmo
 void excluiResultados(char *algoritmo) {
     char caminho[50];
     struct stat st = {0};
@@ -48,7 +52,7 @@ void excluiResultados(char *algoritmo) {
     }
 }
 
-// cria pastas internas
+// Função para criar pastas internas
 void criaPastasInternas(char *caminho, char *sufix) {
   struct stat st = {0};
   char nomePasta[30];
@@ -61,7 +65,7 @@ void criaPastasInternas(char *caminho, char *sufix) {
     }
 }
 
-// cria configuração inicial de pastas
+// Função para criar configuração inicial de pastas
 void criaPastas(char *nomePasta) {
   struct stat st = {0};
   int tamanho = DEZ;
@@ -90,7 +94,7 @@ void criaPastas(char *nomePasta) {
   system("cls");
 }
 
-// preenche array em ordem crescente
+// Função para preencher um array em ordem crescente
 void preencheArrayOrdemCrescente(int *array, int tamanhoArray) {
   int i;
   int seed = geraNumAleatorio();
@@ -100,7 +104,7 @@ void preencheArrayOrdemCrescente(int *array, int tamanhoArray) {
   }
 }
 
-//preenche array em ordem descrescente
+// Função para preencher um array em ordem decrescente
 void preencheArrayOrdemDecrescente(int *array,int tamanhoArray) {
   int i;
   int seed = geraNumAleatorio();
@@ -110,7 +114,7 @@ void preencheArrayOrdemDecrescente(int *array,int tamanhoArray) {
   }
 }
 
-//preenche array em ordem randomica
+// Função para preencher um array em ordem aleatória
 void preencheArrayOrdemAleatoria(int *array,int tamanhoArray) {
   int i;
   int seed = geraNumAleatorio();
@@ -120,6 +124,7 @@ void preencheArrayOrdemAleatoria(int *array,int tamanhoArray) {
   }
 }
 
+// Função para salvar um array em um arquivo
 void salvaArquivo(int *array,int tamanho, char ordem, char *tipoDeArquivo, char *algoritmo) {
   FILE *ponteiroArquivo;
   char caminho[50], nomeArquivo[30], numEmStr[10];
@@ -153,7 +158,7 @@ void salvaArquivo(int *array,int tamanho, char ordem, char *tipoDeArquivo, char 
   fclose(ponteiroArquivo);
 }
 
-// calculo do tempo de execucção
+// Função para calcular o tempo de execução
 double  calcTempExec(int *array, int tamanhoArray) {
   clock_t inicio, fim;
   double tempoExec;
@@ -166,6 +171,7 @@ double  calcTempExec(int *array, int tamanhoArray) {
   return tempoExec;
 }
 
+// Função para salvar o tempo de execução em um arquivo
 void salvaTempoExec(double tempo,int tamanho, char ordem, char *algoritmo) {
   FILE *ponteiroArquivo;
   char caminho[50], nomeArquivo[30], numEmStr[10];
@@ -198,146 +204,182 @@ void salvaTempoExec(double tempo,int tamanho, char ordem, char *algoritmo) {
 
 }
 
+// Função para avaliar o algoritmo Insertion Sort
 void avalia_insertionSort(int *array, int tamanhoArray, char ordem) {
   clock_t inicio, fim;
   double tempoExec;
   inicio = clock();
+  // Salva o array de entrada em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "entrada","Insertion-Sort/");
-
+// Executa o algoritmo
   insertionSort(array,tamanhoArray);
 
   fim = clock();
   tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  // Salva o array ordenado em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "saida","Insertion-Sort/");
+  // Salva o tempo de execução em um arquivo
   salvaTempoExec(tempoExec, tamanhoArray, ordem,"Insertion-Sort/");
 
   printf("Tempo de execucao: %f\n",tempoExec);
 }
 
+// Função para avaliar o algoritmo Selection Sort
 void avalia_selectionSort(int *array, int tamanhoArray, char ordem) {
   clock_t inicio, fim;
   double tempoExec;
   inicio = clock();
+  // Salva o array de entrada em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "entrada","Selection-Sort/");
-
+// Executa o algoritmo
   selectionSort(array,tamanhoArray);
 
   fim = clock();
   tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  // Salva o array ordenado em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "saida","Selection-Sort/");
+  // Salva o tempo de execução em um arquivo
   salvaTempoExec(tempoExec, tamanhoArray, ordem,"Selection-Sort/");
 
   printf("Tempo de execucao: %f\n",tempoExec);
 }
 
+// Função para avaliar o algoritmo Shell Sort
 void avalia_shellSort(int *array, int tamanhoArray, char ordem) {
   clock_t inicio, fim;
   double tempoExec;
   inicio = clock();
+  // Salva o array de entrada em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "entrada","Shell-Sort/");
-
+// Executa o algoritmo
   shellSort(array,tamanhoArray);
 
   fim = clock();
   tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  // Salva o array ordenado em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "saida","Shell-Sort/");
+  // Salva o tempo de execução em um arquivo
   salvaTempoExec(tempoExec, tamanhoArray, ordem,"Shell-Sort/");
 
   printf("Tempo de execucao: %f\n",tempoExec);
   
 }
 
+// Função para avaliar o algoritmo Bubble Sort
 void avalia_bubbleSort(int *array, int tamanhoArray, char ordem) {
   clock_t inicio, fim;
   double tempoExec;
   inicio = clock();
+  // Salva o array de entrada em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "entrada","Bubble-Sort/");
-
+// Executa o algoritmo
   bubbleSort(array,tamanhoArray);
 
   fim = clock();
   tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  // Salva o array ordenado em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "saida","Bubble-Sort/");
+  // Salva o tempo de execução em um arquivo
   salvaTempoExec(tempoExec, tamanhoArray, ordem,"Bubble-Sort/");
 
   printf("Tempo de execucao: %f\n",tempoExec);
 }
 
+// Função para avaliar o algoritmo Merge Sort
 void avalia_mergeSort(int *array, int tamanhoArray, char ordem) {
   clock_t inicio, fim;
   double tempoExec;
   inicio = clock();
+  // Salva o array de entrada em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "entrada","Merge-Sort/");
-
+// Executa o algoritmo
   mergeSort(array,0,tamanhoArray - 1);
 
   fim = clock();
   tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  // Salva o array ordenado em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "saida","Merge-Sort/");
+  // Salva o tempo de execução em um arquivo
   salvaTempoExec(tempoExec, tamanhoArray, ordem,"Merge-Sort/");
 
   printf("Tempo de execucao: %f\n",tempoExec);
 }
 
+// Função para avaliar o algoritmo Quick Sort (versão 1)
 void avalia_quickSort_V1(int *array, int tamanhoArray, char ordem) {
   clock_t inicio, fim;
   double tempoExec;
   inicio = clock();
+  // Salva o array de entrada em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "entrada","Quick-Sort-V1/");
-
+// Executa o algoritmo
   quickSortV1(array,0,tamanhoArray - 1);
 
   fim = clock();
   tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  // Salva o array ordenado em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "saida","Quick-Sort-V1/");
+  // Salva o tempo de execução em um arquivo
   salvaTempoExec(tempoExec, tamanhoArray, ordem,"Quick-Sort-V1/");
 
   printf("Tempo de execucao: %f\n",tempoExec);
 }
 
+// Função para avaliar o algoritmo Quick Sort (versão 2 - Media)
 void avalia_quickSort_V2(int *array, int tamanhoArray, char ordem) {
   clock_t inicio, fim;
   double tempoExec;
   inicio = clock();
+  // Salva o array de entrada em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "entrada","Quick-Sort-V2-Media/");
-
+// Executa o algoritmo
   quickSortV2(array,0,tamanhoArray - 1);
 
   fim = clock();
   tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  // Salva o array ordenado em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "saida","Quick-Sort-V2-Media/");
+  // Salva o tempo de execução em um arquivo
   salvaTempoExec(tempoExec, tamanhoArray, ordem,"Quick-Sort-V2-Media/");
 
   printf("Tempo de execucao: %f\n",tempoExec);
 }
 
+// Função para avaliar o algoritmo Quick Sort (versão 3 - Mediana)
 void avalia_quickSort_V3(int *array, int tamanhoArray, char ordem) {
   clock_t inicio, fim;
   double tempoExec;
   inicio = clock();
+  // Salva o array de entrada em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "entrada","Quick-Sort-V3-Mediana/");
-
+// Executa o algoritmo
   quickSortV3(array,0,tamanhoArray - 1);
 
   fim = clock();
   tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  // Salva o array ordenado em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "saida","Quick-Sort-V3-Mediana/");
+  // Salva o tempo de execução em um arquivo
   salvaTempoExec(tempoExec, tamanhoArray, ordem,"Quick-Sort-V3-Mediana/");
 
   printf("Tempo de execucao: %f\n",tempoExec);
 }
 
+// Função para avaliar o algoritmo Quick Sort (versão 4 - Random)
 void avalia_quickSort_V4(int *array, int tamanhoArray, char ordem) {
   clock_t inicio, fim;
   double tempoExec;
   inicio = clock();
+  // Salva o array de entrada em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "entrada","Quick-Sort-V4-Random/");
-
+// Executa o algoritmo
   quickSortV4(array,0,tamanhoArray - 1);
 
   fim = clock();
   tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  // Salva o array ordenado em um arquivo
   salvaArquivo(array, tamanhoArray, ordem, "saida","Quick-Sort-V4-Random/");
+  // Salva o tempo de execução em um arquivo
   salvaTempoExec(tempoExec, tamanhoArray, ordem,"Quick-Sort-V4-Random/");
 
   printf("Tempo de execucao: %f\n",tempoExec);
@@ -347,12 +389,15 @@ int main () {
   int *array, tamanhoArray;
   char ordem;
 
+// Chama a função para obter a escolha do algoritmo.
   int algoritmo = get_opAlgoritmo();
 
+// Se a escolha do algoritmo for 0, retorna 0 e encerra o programa.
   if(algoritmo == 0) {
     return 0;
   }
 
+// Se a escolha do algoritmo for 10, exclui os resultados anteriores de todos os algoritmos.
   if(algoritmo==10){
       excluiResultados(INSERTION);
       excluiResultados(SELECTION);
@@ -367,12 +412,15 @@ int main () {
       return 0;
   }
   
+  // Obtém o tamanho da entrada para teste.
   tamanhoArray = get_tamanhoArray();
   if(tamanhoArray == 0) {
     printf("Saindo...");
     return 0;
   }
   system("cls");
+
+  // Obtém a escolha da ordem de ordenação.
   ordem = get_ordem();
   if(ordem == 's') {
     printf("Saindo...");
@@ -383,7 +431,8 @@ int main () {
     printf("Erro ao alocar array...");
     return 0;
   }
-  switch (ordem) {
+  // Preenche o array de acordo com a escolha de ordem.
+  switch (ordem) { 
     case 'c':
       preencheArrayOrdemCrescente(array, tamanhoArray);
       break;
@@ -397,7 +446,8 @@ int main () {
       break;
   }
 
-  switch(algoritmo){
+// Avalia o algoritmo escolhido.
+  switch(algoritmo){ 
     case 1:
       criaPastas(INSERTION);
       avalia_insertionSort(array,tamanhoArray,ordem);
