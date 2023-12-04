@@ -23,16 +23,17 @@ int get_opAlgoritmo() {
     printf("-> [7] - Quick Sort V2-Media\n");
     printf("-> [8] - Quick Sort V3-Mediana\n");
     printf("-> [9] - Quick Sort V4-Random\n");
-    printf("-> [10] - Excluir TODOS os resultados anteriores\n");
+    printf("-> [10] - Heap Sort\n");
+    printf("-> [11] - Excluir TODOS os resultados anteriores\n");
     printf("-> [0] - Sair\n");
     printf("<-------------------------->\n");
     printf("-> ");
     scanf("%d",&opcao);
-    if(opcao < 0 || opcao > 10) {
+    if(opcao < 0 || opcao > 11) {
       system("cls");
       printf("#*# Escolha uma opcao valida! #*#\n\n");
     }
-  } while(opcao < 0 || opcao > 10);
+  } while(opcao < 0 || opcao > 11);
   return opcao;
 }
 
@@ -100,5 +101,27 @@ char get_ordem() {
       printf("#*# Escolha uma opcao valida! #*#\n\n");
     }
   } while( opcao != 'c' && opcao != 'd'  && opcao != 'r'  && opcao != 's' );
+  return opcao;
+}
+
+int get_opcoesHeap() {
+  system("cls || clear");
+  int opcao;
+    do {
+      printf("                                 HEAP-SORT                                \n");
+      printf("<----------------------------------------------------------------------->\n");
+      printf("Escolha a funcao do heap-sort que deseja testar: \n");
+      printf("-> [1] - Heap Minimo\n");
+      printf("-> [2] - Heap Extract Min\n");
+      printf("-> [3] - Heap Increase Key\n");
+      printf("-> [4] - Heap Max Insert\n");
+      printf("-> [0] - Nenhum\n");
+      printf("<----------------------------------------------------------------------->\n");
+      printf("-> ");
+      scanf("%d",&opcao);
+      if(opcao < 0 && opcao > 4) {
+        printf("Escolha uma opcao valida!\n");
+      }
+    } while( opcao < 0 && opcao > 4 );
   return opcao;
 }

@@ -26,6 +26,7 @@
 #define QUICK_V2 "Quick-Sort-V2-Media"
 #define QUICK_V3 "Quick-Sort-V3-Mediana"
 #define QUICK_V4 "Quick-Sort-V4-Random"
+#define HEAP "Heap-Sort"
 
 // Função para gerar um número aleatório
 int geraNumAleatorio() {
@@ -122,6 +123,47 @@ void preencheArrayOrdemAleatoria(int *array,int tamanhoArray) {
   for(i=0; i < tamanhoArray; i++) {
     array[i] =  rand();
   }
+}
+
+// Funções do HEAP SORT
+void heapMin(int *array, int tamanho) {
+  constroi_heapMin(array, tamanho);
+  printArray(array,tamanho);
+}
+
+void heapExtractMin(int *array, int tamanho) {
+  constroi_heapMin(array, tamanho);
+  array[0] = NULL;
+  printArray(array,tamanho);
+  heapfy(array,tamanho,0);
+  printArray(array,tamanho);
+}
+
+void heapIncreaseKey(int *array, int tamanho) {
+  fflush(stdin);
+  constroi_heapMin(array, tamanho);
+  int pos;
+  do{
+  printf("Digite a posicao que deseja inserir (entre 0 e %d): \n", tamanho - 1);
+  printf("-> \n");
+  scanf("%d", &pos);
+  if (pos >= 0 && pos < tamanho) {
+    array[pos] = 1000;  // Atualiza o valor
+    // Reorganize o heap após a alteração
+    // while (pos > 0 && array[(pos - 1) / 2] > array[pos]) {
+    //   swap(&array[pos], &array[(pos - 1) / 2]);
+    //   pos = (pos - 1) / 2;
+    // }
+    printf("Inserido com sucesso!\n");
+  } else {
+    printf("Posicao invalida! Certifique-se de que a posicao esteja entre 0 e %d.\n", tamanho - 1);
+  }
+  }while(pos < 0 || pos >= tamanho);
+}
+
+void heapMaxInsert(int *array, int tamanho) {
+  constroi_heapMin(array, tamanho);
+  array[tamanho - 1] = 1000;
 }
 
 // Função para salvar um array em um arquivo
@@ -385,6 +427,48 @@ void avalia_quickSort_V4(int *array, int tamanhoArray, char ordem) {
   printf("Tempo de execucao: %f\n",tempoExec);
 }
 
+// Funções para avaliar o HEAP SORT
+void avalia_heapSort(int *array, int tamanhoArray, char order) {
+  clock_t inicio, fim;
+  double tempoExec;
+  printf("Vetor Original: \n");
+  printArray(array,tamanhoArray);
+  printf("\n");
+  salvaArquivo(array, tamanhoArray, order, "entrada","Heap-Sort/");
+  inicio = clock();
+  heapSort(array,tamanhoArray);
+  int minElement=array[tamanhoArray-1];
+  fim = clock();
+  printf("Chamando o Heapsort: \n");
+  printArray(array,tamanhoArray);
+  printf("\n");
+  tempoExec = (double)(fim - inicio) / CLOCKS_PER_SEC;
+  salvaArquivo(array, tamanhoArray, order, "saida","Heap-Sort/");
+  salvaTempoExec(tempoExec, tamanhoArray, order,"Heap-Sort/");
+  printf("O elemento minimo e: %d\n",minElement);
+  printf("\n");
+  printf("Tempo de execucao: %f\n",tempoExec);
+}
+
+void chamaFuncoesHeap(int opt, int *array, int tamanho) {
+  switch(opt) {
+    case 1:
+      heapMin(array, tamanho);
+      break;
+    case 2:
+      heapExtractMin(array, tamanho);
+      break;
+    case 3:
+      heapIncreaseKey(array, tamanho);
+      break;
+    case 4:
+      heapMaxInsert(array,tamanho);
+      break;
+    default:
+      break;
+  }
+}
+
 int main () {
   int *array, tamanhoArray;
   char ordem;
@@ -397,8 +481,14 @@ int main () {
     return 0;
   }
 
+  int opHeap = 0;
+
+  if(algoritmo == 10) {
+    opHeap = get_opcoesHeap();
+  }
+
 // Se a escolha do algoritmo for 10, exclui os resultados anteriores de todos os algoritmos.
-  if(algoritmo==10){
+  if(algoritmo==11){
       excluiResultados(INSERTION);
       excluiResultados(SELECTION);
       excluiResultados(SHELL);
@@ -408,6 +498,7 @@ int main () {
       excluiResultados(QUICK_V2);
       excluiResultados(QUICK_V3);
       excluiResultados(QUICK_V4);
+      excluiResultados(HEAP);
       printf("Resultados excluidos com sucesso.\n");
       return 0;
   }
@@ -444,6 +535,10 @@ int main () {
       break;
     default:
       break;
+  }
+
+  if(opHeap) {
+    chamaFuncoesHeap(opHeap, array, tamanhoArray);
   }
 
 // Avalia o algoritmo escolhido.
@@ -484,6 +579,9 @@ int main () {
       criaPastas(QUICK_V4);
       avalia_quickSort_V4(array,tamanhoArray,ordem);
       break;
+    case 10:
+      criaPastas(HEAP);
+      avalia_heapSort(array,tamanhoArray,ordem);
     default:
       break;
   }

@@ -75,8 +75,8 @@ void bubbleSort(int *array, int tamanho)
   }
 }
 
-int* alloc_array(int size) {
-  return (int*) malloc(size * sizeof(int));
+int* alloc_array(int tamanho) {
+  return (int*) malloc(tamanho * sizeof(int));
 }
 
 // ! MERGE SORT---------------------------------------------
@@ -148,54 +148,54 @@ void mergeSort(int *array, int l, int r)
 
 // ! QUICK SORT_V1-----------------------------------------------------------------
 
-int particaoV1(int *array, int low, int high)
+int particaoV1(int *array, int baixo, int alto)
 {
-    int pivot = array[low];
-    int i = low - 1;
+    int pivo = array[baixo];
+    int i = baixo - 1;
     int j;
 
-    for (j = low; j <= high - 1; j++) {
-        if (array[j] < pivot) {
+    for (j = baixo; j <= alto - 1; j++) {
+        if (array[j] < pivo) {
             i++;
             swap(&array[i], &array[j]);
         }
     }
 
-    swap(&array[i + 1], &array[high]);
+    swap(&array[i + 1], &array[alto]);
     return (i + 1);
 }
 
-void quickSortV1(int *array, int low, int high)
+void quickSortV1(int *array, int baixo, int alto)
 {
-    if (low < high) {
-        int pi = particaoV1(array, low, high);
-        quickSortV1(array, low, pi - 1);
-        quickSortV1(array, pi + 1, high);
+    if (baixo < alto) {
+        int pi = particaoV1(array, baixo, alto);
+        quickSortV1(array, baixo, pi - 1);
+        quickSortV1(array, pi + 1, alto);
     }
 }
 
 
 // ! QUICK SORT_V2-----------------------------------------------------------------
 
-int particaoV2(int *array, int low, int high)
+int particaoV2(int *array, int baixo, int alto)
 {
-    int media = (low + high)/2; 
+    int media = (baixo + alto)/2; 
     int temp = array[media];
-    array[media] = array[low];
-    array[low] = temp;
+    array[media] = array[baixo];
+    array[baixo] = temp;
 
-    int pivot = array[low];
-    int i = low - 1, j = high + 1;
+    int pivo = array[baixo];
+    int i = baixo - 1, j = alto + 1;
   
     while (1) {
   
         do {
             i++;
-        } while (array[i] < pivot);
+        } while (array[i] < pivo);
   
         do {
             j--;
-        } while (array[j] > pivot);
+        } while (array[j] > pivo);
   
         if (i >= j)
             return j;
@@ -206,37 +206,37 @@ int particaoV2(int *array, int low, int high)
     }
 }
 
-void quickSortV2(int *array, int low, int high)
+void quickSortV2(int *array, int baixo, int alto)
 {
-    if (low < high) {
-        int pi = particaoV2(array, low, high);
-        quickSortV2(array, low, pi - 1);
-        quickSortV2(array, pi + 1, high);
+    if (baixo < alto) {
+        int pi = particaoV2(array, baixo, alto);
+        quickSortV2(array, baixo, pi - 1);
+        quickSortV2(array, pi + 1, alto);
     }
 }
 
 // ! QUICK SORT_V3-----------------------------------------------------------------
 
-int particaoV3(int *array, int low, int high)
+int particaoV3(int *array, int baixo, int alto)
 {   
-    int size = sizeof(array) / sizeof(int);
-    int mediana = ((size/2) + (size/2-1)) / 2 ;
+    int tamanho = sizeof(array) / sizeof(int);
+    int mediana = ((tamanho/2) + (tamanho/2-1)) / 2 ;
     int temp = array[mediana];
-    array[mediana] = array[low];
-    array[low] = temp;
+    array[mediana] = array[baixo];
+    array[baixo] = temp;
 
-    int pivot = array[low];
-    int i = low - 1, j = high + 1;
+    int pivo = array[baixo];
+    int i = baixo - 1, j = alto + 1;
   
     while (1) {
   
         do {
             i++;
-        } while (array[i] < pivot);
+        } while (array[i] < pivo);
   
         do {
             j--;
-        } while (array[j] > pivot);
+        } while (array[j] > pivo);
   
         if (i >= j)
             return j;
@@ -247,12 +247,12 @@ int particaoV3(int *array, int low, int high)
     }
 }
 
-void quickSortV3(int *array, int low, int high)
+void quickSortV3(int *array, int baixo, int alto)
 {
-    if (low < high) {
-        int pi = particaoV3(array, low, high);
-        quickSortV3(array, low, pi - 1);
-        quickSortV3(array, pi + 1, high);
+    if (baixo < alto) {
+        int pi = particaoV3(array, baixo, alto);
+        quickSortV3(array, baixo, pi - 1);
+        quickSortV3(array, pi + 1, alto);
     }
 }
 
@@ -264,25 +264,25 @@ int geraNumRandomRange(int range) {
   return rand() % range;
 }
 
-int particaoV4(int *array, int low, int high)
+int particaoV4(int *array, int baixo, int alto)
 {
-    int random = geraNumRandomRange(high);
+    int random = geraNumRandomRange(alto);
     int temp = array[random];
-    array[random] = array[low];
-    array[low] = temp;
+    array[random] = array[baixo];
+    array[baixo] = temp;
 
-    int pivot = array[low];
-    int i = low - 1, j = high + 1;
+    int pivo = array[baixo];
+    int i = baixo - 1, j = alto + 1;
   
     while (1) {
   
         do {
             i++;
-        } while (array[i] < pivot);
+        } while (array[i] < pivo);
   
         do {
             j--;
-        } while (array[j] > pivot);
+        } while (array[j] > pivo);
   
         if (i >= j)
             return j;
@@ -293,11 +293,77 @@ int particaoV4(int *array, int low, int high)
     }
 }
 
-void quickSortV4(int *array, int low, int high)
+void quickSortV4(int *array, int baixo, int alto)
 {
-    if (low < high) {
-        int pi = particaoV4(array, low, high);
-        quickSortV4(array, low, pi - 1);
-        quickSortV4(array, pi + 1, high);
+    if (baixo < alto) {
+        int pi = particaoV4(array, baixo, alto);
+        quickSortV4(array, baixo, pi - 1);
+        quickSortV4(array, pi + 1, alto);
     }
+}
+
+// ! HEAP SORT------------------------------------------------------------------------------
+void printArray(int *arr, int n) {
+    fflush(stdin);
+    if (n > 1000) {
+        char op;
+        do {
+            printf("Este vetor possui muitos elementos para imprimir na tela!!!\nDeseja exibir mesmo assim? (s/n) \n");
+            scanf(" %c", &op);
+            op = tolower(op);
+
+            if (op != 'n' && op != 's') {
+                printf("Escolha uma opcao valida!\n");
+            }
+        } while (op != 'n' && op != 's');
+
+        if (op == 'n') return 0;
+    }
+  for (int i = 0; i < n; i++) {
+    printf("%d ", arr[i]);
+  }
+  printf("\n");
+}
+
+void heapfy(int *array, int tamanho, int i) {
+
+  int menor = i;
+
+  int esquerda = 2 * i + 1;
+
+  int direita = 2 * i + 2;
+  
+  if (esquerda < tamanho && array[esquerda] < array[menor]) {
+    menor = esquerda;
+  }
+
+  if (direita < tamanho && array[direita] < array[menor]) {
+    menor = direita;
+  }
+
+  if (menor != i) {
+    swap(&array[i], &array[menor]);
+    heapfy(array, tamanho, menor);
+  }
+}
+
+void constroi_heapMin(int *array, int tamanho) {
+  int i;
+  for (i = tamanho / 2 - 1; i >= 0; i--) {
+    heapfy(array, tamanho, i);
+  } 
+}
+
+void heapSort(int *array, int tamanho) {
+  
+  constroi_heapMin(array,tamanho);
+  printf("Chamando a build: \n");
+  printArray(array,tamanho);
+  printf("\n");
+
+  int i;
+  for (i = tamanho - 1; i >= 0; i--) {
+    swap(&array[0], &array[i]);
+    heapfy(array, i, 0);
+  }
 }
