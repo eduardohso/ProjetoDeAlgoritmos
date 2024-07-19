@@ -111,17 +111,18 @@ int get_opcoesHeap() {
       printf("                                 HEAP-SORT                                \n");
       printf("<----------------------------------------------------------------------->\n");
       printf("Escolha a funcao do heap-sort que deseja testar: \n");
-      printf("-> [1] - Heap Minimo\n");
-      printf("-> [2] - Heap Extract Min\n");
-      printf("-> [3] - Heap Increase Key\n");
-      printf("-> [4] - Heap Max Insert\n");
+      printf("-> [1] - Heap Sort\n");
+      printf("-> [2] - Heap Minimo\n");
+      printf("-> [3] - Heap Extract Min\n");
+      printf("-> [4] - Heap Increase Key\n");
+      printf("-> [5] - Max Heap Insert\n");
       printf("-> [0] - Nenhum\n");
       printf("<----------------------------------------------------------------------->\n");
       printf("-> ");
       scanf("%d",&opcao);
-      if(opcao < 0 && opcao > 4) {
+      if(opcao < 0 || opcao > 5) {
         printf("Escolha uma opcao valida!\n");
       }
-    } while( opcao < 0 && opcao > 4 );
+    } while( opcao < 0 || opcao > 5 );
   return opcao;
 }

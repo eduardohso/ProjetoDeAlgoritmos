@@ -304,66 +304,86 @@ void quickSortV4(int *array, int baixo, int alto)
 
 // ! HEAP SORT------------------------------------------------------------------------------
 void printArray(int *arr, int n) {
-    fflush(stdin);
-    if (n > 1000) {
-        char op;
-        do {
-            printf("Este vetor possui muitos elementos para imprimir na tela!!!\nDeseja exibir mesmo assim? (s/n) \n");
-            scanf(" %c", &op);
-            op = tolower(op);
-
-            if (op != 'n' && op != 's') {
-                printf("Escolha uma opcao valida!\n");
-            }
-        } while (op != 'n' && op != 's');
-
-        if (op == 'n') return 0;
-    }
   for (int i = 0; i < n; i++) {
     printf("%d ", arr[i]);
   }
   printf("\n");
 }
 
-void heapfy(int *array, int tamanho, int i) {
+void heapfyMin(int *arr, int i, int tam) {
+    int menor = i;
+    int esq = 2 * i + 1;
+    int dir = 2 * i + 2;
 
-  int menor = i;
+    if (esq < tam && arr[esq] < arr[menor])
+        menor = esq;
 
-  int esquerda = 2 * i + 1;
+    if (dir < tam && arr[dir] < arr[menor])
+        menor = dir;
 
-  int direita = 2 * i + 2;
-  
-  if (esquerda < tamanho && array[esquerda] < array[menor]) {
-    menor = esquerda;
-  }
-
-  if (direita < tamanho && array[direita] < array[menor]) {
-    menor = direita;
-  }
-
-  if (menor != i) {
-    swap(&array[i], &array[menor]);
-    heapfy(array, tamanho, menor);
-  }
+    if (menor != i) {
+        swap(&arr[i], &arr[menor]);
+        heapfyMin(arr, menor, tam);
+    }
 }
 
-void constroi_heapMin(int *array, int tamanho) {
-  int i;
-  for (i = tamanho / 2 - 1; i >= 0; i--) {
-    heapfy(array, tamanho, i);
-  } 
+void buildMinHeap(int *arr, int tam) {
+    for (int i = tam / 2 - 1; i >= 0; i--) {
+        heapfyMin(arr, i, tam);
+    }
 }
 
-void heapSort(int *array, int tamanho) {
-  
-  constroi_heapMin(array,tamanho);
-  printf("Chamando a build: \n");
-  printArray(array,tamanho);
-  printf("\n");
+void minHeapfy(int *arr, int tam) {
+    swap(&arr[0], &arr[tam - 1]);
+    tam--;
+    arr = realloc(arr, tam * sizeof(int));
+    if (arr == NULL) {
+        printf("Erro ao realocar memória.\n");
+        exit(1);
+    }
+    heapfyMin(arr, 0, tam);
+}
 
-  int i;
-  for (i = tamanho - 1; i >= 0; i--) {
-    swap(&array[0], &array[i]);
-    heapfy(array, i, 0);
-  }
+void heapSortMin(int *arr, int tam) {
+    buildMinHeap(arr, tam);
+
+    for (int i = tam - 1; i > 0; i--) {
+        swap(&arr[0], &arr[i]);
+        tam--;
+        arr = realloc(arr, tam * sizeof(int));
+        if (arr == NULL) {
+            printf("Erro ao realocar memória.\n");
+            exit(1);
+        }
+        heapfyMin(arr, 0, tam);
+    }
+}
+
+void heapfy(int *arr, int tam, int i)
+{
+    int maior = i;
+    int esq = 2 * i + 1;
+    int dir = 2 * i + 2;
+
+    if (esq < tam && arr[esq] > arr[maior])
+        maior = esq;
+
+    if (dir < tam && arr[dir] > arr[maior])
+        maior = dir;
+
+    if (maior != i) {
+        swap(&arr[i], &arr[maior]);
+        heapfy(arr, tam, maior);
+    }
+}
+
+void heapSort(int *arr, int tam)
+{
+    for (int i = tam / 2 - 1; i >= 0; i--)
+        heapfy(arr, tam, i);
+
+    for (int i = tam - 1; i >= 0; i--) {
+        swap(&arr[0], &arr[i]);
+        heapfy(arr, i, 0);
+    }
 }
